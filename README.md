@@ -15,4 +15,6 @@ The main contents include:
 
 in my blog, you can preview this app
 
+http://blog.csdn.net/xuexiiphone/article/details/52066344
+
 so, don't warry ,just be happy!
