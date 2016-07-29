@@ -1,0 +1,49 @@
+<ion-view view-title="easyNote">
+  <ion-nav-bar class="bar-positive" style="background-color: #FF0000">
+    <ion-nav-buttons side="right">
+      <button class="button-clear" ng-click="synchroToNote()"><a class="ion-ios-loop-strong"></a></button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content class="padding">
+    <div style="background-color:#BF77C0;border-radius: 15px;width: 100%">
+      <a ng-click="getScheduleListByOption(1)" class="item-body" style="color: ghostwhite"><span id="tab1"
+                                                                                                 style="border-radius: 5px;box-shadow: 0 0 15px #f3d42e;">所有</span></a>
+      <a ng-click="getScheduleListByOption(2)" class="item-body" style="color: ghostwhite"><span id="tab2"
+                                                                                                 style="border-radius: 5px">已完成</span></a>
+      <a ng-click="getScheduleListByOption(3)" class="item-body" style="color: ghostwhite"><span id="tab3"
+                                                                                                 style="border-radius: 5px">未完成</span></a>
+      <a ng-click="getScheduleListByOption(4)" class="item-body" style="color: ghostwhite"><span id="tab4"
+                                                                                                 style="border-radius: 5px">超时</span></a>
+      <a ng-click="getScheduleListByOption(5)" class="item-body" style="color: ghostwhite"><span id="tab5"
+                                                                                                 style="border-radius: 5px">待办</span></a>
+    </div>
+    <div class="list card">
+      <!--<div class="h1 title">日程列表</div>-->
+      <!--<div class="content has-header ionic-pseudo">-->
+      <ion-list class="list-inset" show-delete="shouldShowDelete">
+        <!--点击列表项可以查看日程详情，该功能已隐藏-->
+        <!--<ion-item ng-repeat="info in scheduleInfos" class="item-avatar" href="#tab/list/detail">-->
+        <ion-item ng-repeat="info in scheduleInfos" class="item item-thumbnail-left">
+          <img src="http://p.3761.com/pic/68291423098733.jpg">
+          {{ info.scheduleType }}
+          <p>{{ info.scheduleDate |date:'fullDate' }}</p>
+          <p>{{ info.scheduleTime }}</p>
+          <p>{{ info.scheduleDes }}</p>
+            <span class="item-note" style="color: #00A000">
+              {{ info.scheduleState }}
+              {{ info.isSynchro }}
+            </span>
+          <ion-option-button class="button-balanced"
+                             ng-click="share(info)">
+            share
+          </ion-option-button>
+          <ion-option-button class="button-assertive"
+                             ng-click="removeItem(info)">
+            delete
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
+    </div>
+    <!--</div>-->
+  </ion-content>
+</ion-view>

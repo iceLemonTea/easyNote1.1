@@ -1,0 +1,58 @@
+<ion-view view-title={{item.title}}>
+  < class="padding">
+  <div class="list card">
+    <div class="item item-avatar">
+      <img src="{{ item.avter }}">
+      <h2>{{ item.title }}</h2>
+    </div>
+    <div class="item item-body">
+      <h3>日期：</h3>
+      <ionic-datepicker input-obj="datepickerObjectEnd">
+        <!--<button class="button button-block button-positive"> {{datepickerObjectEnd.inputDate |-->
+          <!--date:datepickerObjectEnd.dateFormat}}-->
+        <!--</button>-->
+        {{datepickerObjectEnd.inputDate |
+        date:datepickerObjectEnd.dateFormat}}
+      </ionic-datepicker>
+      <h3>时间：</h3>
+      <ionic-timepicker input-obj="vipTimePickerObject">
+        <!--<button class="button button-block button-positive">-->
+          <!--&lt;!&ndash;<standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian>&ndash;&gt;-->
+          <!--<standard-time-no-meridian-->
+            <!--etime='vipTimePickerObject.inputEpochTime'>{{selectedTime}}-->
+          <!--</standard-time-no-meridian>-->
+        <!--</button>-->
+        {{selectedTime}}
+      </ionic-timepicker>
+    </div>
+
+    <div class="item item-body">
+      <h3>便签内容：</h3>
+      <label class="item item-input">
+        <input placeholder="{{ mywords }}" type="text" ng-model="mywords">
+      </label>
+    </div>
+    <div class="item item-body">
+      <h2>便签状态：</h2>
+      <p>
+        <a class="subdued" ng-click="show()">state: {{ item.state }}</a>
+        <a class="subdued">like: 5</a>
+      </p>
+    </div>
+    <div class="item tabs tabs-secondary tabs-icon-left">
+      <a class="tab-item" ng-click="saveInfo()">
+        <i class="icon ion-checkmark-round"></i>
+        save
+      </a>
+      <a class="tab-item">
+        <i class="icon ion-paper-airplane"></i>
+        Send To Note
+      </a>
+      <a class="tab-item">
+        <i class="icon ion-share"></i>
+        Share
+      </a>
+    </div>
+  </div>
+  </ion-content>
+</ion-view>
