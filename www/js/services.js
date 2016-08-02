@@ -116,6 +116,10 @@ angular.module('starter.services', [])
         //将索引+1
         service.setScheduleId(scheduleId + 1);
       },
+      updateScheduleInfo: function (scheduleInfo) {//更新日程信息数据
+        var scheduleId = parseInt(scheduleInfo.scheduleId);
+        localStorage.setItem(scheduleId, JSON.stringify(scheduleInfo));
+      },
       setScheduleDeleteList: function (scheduleId) {//更新删除日程列表
         var scheduleList = localStorage.getItem("scheduleDeleteList");
         var jsonArray = new Array();

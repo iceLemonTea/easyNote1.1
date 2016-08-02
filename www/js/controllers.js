@@ -1,8 +1,14 @@
 angular.module('starter.controllers', [])
 
 
-  .controller('CardListCtrl', function ($scope, ContextParseService, getContextEntityAndTag, $state, LocalStorageService, $ionicPopup, $ionicTabsDelegate, typeOfListService) {
+  .controller('CardListCtrl', function ($scope, ContextParseService, getContextEntityAndTag, $state, LocalStorageService, $ionicPopup, $ionicTabsDelegate, typeOfListService, $state) {
 
+    //初始化变量
+    $scope.totalNum = 0;
+    $scope.meetingNum = 0;
+    $scope.businessNum = 0;
+    $scope.travelNum = 0;
+    $scope.otherNum = 0;
     //TODO:从本地缓存中读取日程数据
     function getScheduleInfoArray() {
       var scheduleInfoArray = LocalStorageService.getScheduleInfoArray();
@@ -22,10 +28,6 @@ angular.module('starter.controllers', [])
     //从数据中获取相应类型的数量
     function getScheduleNumFromInfos(scheduleInfoArray) {
       $scope.totalNum = scheduleInfoArray.length;
-      $scope.meetingNum = 0;
-      $scope.businessNum = 0;
-      $scope.travelNum = 0;
-      $scope.otherNum = 0;
       for (var i = 0; i < scheduleInfoArray.length; i++) {
         switch (scheduleInfoArray[i].scheduleType) {
           case "聚会":
@@ -76,7 +78,8 @@ angular.module('starter.controllers', [])
       confirmPopup.then(function (res) {
         if (res) {
           console.log('You are sure');
-          $ionicTabsDelegate.select(2);
+          //$ionicTabsDelegate.select(1);
+          $state.go('tab.create', {}, {});
         } else {
           console.log('You are not sure');
         }
@@ -88,8 +91,11 @@ angular.module('starter.controllers', [])
       console.log("和蓝牙同步");
     }
   })
-  .controller('ListCtrl', function ($scope, ContextParseService, getContextEntityAndTag, $state, LocalStorageService, $ionicPopup, $ionicTabsDelegate, typeOfListService) {
 
+  .controller('ListCtrl', function ($scope, ContextParseService, getContextEntityAndTag, $state, LocalStorageService, $ionicPopup, $ionicTabsDelegate, typeOfListService) {
+    //init some param
+    $scope.isShowDoneButton = true;
+    $scope.shouldShowDelete = false;
     //TODO:从本地缓存中读取日程数据
     function getScheduleInfoArray() {
       var scheduleInfoArray = LocalStorageService.getScheduleInfoArray();
@@ -176,7 +182,7 @@ angular.module('starter.controllers', [])
       confirmPopup.then(function (res) {
         if (res) {
           console.log('You are sure');
-          $ionicTabsDelegate.select(2);
+          $state.go('tab.create', {}, {});
         } else {
           console.log('You are not sure');
         }
@@ -206,6 +212,17 @@ angular.module('starter.controllers', [])
       //同步删除列表
       LocalStorageService.getScheduleDeleteList();
     }
+    //item - has finished this schedule
+    $scope.infoDone = function (info) {
+      console.log("infoDone = ",info);
+      //修改样式
+      var tag = "#p"+info.scheduleId;
+      $(tag).css("text-decoration", "line-through");
+      //同步状态
+      info.scheduleState = "done";
+      LocalStorageService.updateScheduleInfo(info);
+      //$scope.isShowDoneButton = false;
+    }
     $scope.removeItem = function (info) {
       console.log(info);
       //从本地缓存中删除该日程信息
@@ -218,7 +235,7 @@ angular.module('starter.controllers', [])
     $scope.addSchedule = function () {
       console.log("新增日程");
       //$ionicTabsDelegate.select(2);
-      //$state.go('/create', {}, {});
+      $state.go('tab.create', {}, {});
     }
   })
 
@@ -363,7 +380,6 @@ angular.module('starter.controllers', [])
     }
     $scope.scheduleInfo = {
       scheduleType: "ALL",
-      scheduleTime: (new Date()).getHours() + ':' + (new Date()).getMinutes() + ':' + (new Date()).getSeconds(),
       scheduleDate: new Date(),
       scheduleDes: "please input your msg",
       scheduleState: "待办",

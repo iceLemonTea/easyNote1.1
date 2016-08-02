@@ -1,9 +1,10 @@
 <ion-view view-title="easyNote">
   <ion-nav-bar class="bar-stable">
-  <ion-nav-buttons side="right">
-    <button class="button-clear" ng-click="addSchedule()"><a href="#tab/list/create" class="ion-plus" style="font-size: 22px"></a></button>
-  </ion-nav-buttons>
-</ion-nav-bar>
+    <ion-nav-buttons side="right">
+      <!--href="#tab/list/create"-->
+      <button class="button-clear" ng-click="addSchedule()"><a class="ion-plus" style="font-size: 22px"></a></button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
   <ion-content class="padding">
     <!--顶部导航条，因业务需求变化，暂时屏蔽-->
     <!--<div style="background-color:#BF77C0;border-radius: 15px;width: 100%">-->
@@ -19,35 +20,30 @@
     <!--style="border-radius: 5px">待办</span></a>-->
     <!--</div>-->
     <div class="list card">
-        <h1 style="color: #44A5C7;padding-left: 15px">{{title}}</h1>
-        <!--<div class="content has-header ionic-pseudo">-->
-        <ion-list class="list-inset" show-delete="shouldShowDelete">
-          <!--点击列表项可以查看日程详情，该功能已隐藏-->
-          <!--<ion-item ng-repeat="info in scheduleInfos" class="item-avatar" href="#tab/list/detail">-->
-          <!--使用filter处理数组中的判断条件-->
-          <!--<ion-item id="myItem" ng-repeat="info in scheduleInfos | filter:{scheduleType: '事项类型 ：出行'}" class="item item-thumbnail-left">-->
-          <ion-item id="myItem" ng-repeat="info in scheduleInfos" class="item item-avatar">
-            <img src="http://img0.imgtn.bdimg.com/it/u=2281878624,1078964814&fm=21&gp=0.jpg">
-            <!--{{ info.scheduleType }}-->
-            <!--<p>{{ info.scheduleDate |date:'fullDate' }}</p>-->
-            <!--<p>{{ info.scheduleTime }}</p>-->
-            <p>{{ info.scheduleDes }}</p>
-            <!--<span class="item-note" style="color: #00A000">-->
-            <!--{{ info.scheduleState }}-->
-            <!--{{ info.isSynchro }}-->
-            <!--</span>-->
-            <ion-option-button class="button-clear" style="padding-top:25px;padding-left: 11px;padding-right:11px"
-                               ng-click="share(info)">
-              <a class="ion-ios-paperplane-outline" style="font-size: 32px;">
-              </a>
-            </ion-option-button>
-            <ion-option-button class="button-clear" style="padding-top:25px;padding-left: 11px;padding-right:11px"
-                               ng-click="removeItem(info)">
-              <a class="ion-ios-trash-outline" style="font-size: 32px">
-              </a>
-            </ion-option-button>
-          </ion-item>
-        </ion-list>
+      <h1 style="color: #44A5C7;padding-left: 15px">{{title}}</h1>
+      <!--<div class="content has-header ionic-pseudo">-->
+      <ion-list class="list-inset" show-delete="{{shouldShowDelete}}">
+        <!--点击列表项可以查看日程详情，该功能已隐藏-->
+        <!--<ion-item ng-repeat="info in scheduleInfos" class="item-avatar" href="#tab/list/detail">-->
+        <!--使用filter处理数组中的判断条件-->
+        <!--<ion-item id="myItem" ng-repeat="info in scheduleInfos | filter:{scheduleType: '事项类型 ：出行'}" class="item item-thumbnail-left">-->
+        <ion-item id="myItem" ng-repeat="info in scheduleInfos" class="item item-avatar">
+          <img src="http://img0.imgtn.bdimg.com/it/u=2281878624,1078964814&fm=21&gp=0.jpg">
+          <p ng-class="{true: 'done', false: ''}[info.scheduleState == 'done']">{{ info.scheduleDes }}</p>
+          <ion-option-button ng-if="isShowDoneButton" class="button-clear"
+                             style="padding-top:25px;padding-left: 11px;padding-right:11px"
+                             ng-click="infoDone(info)">
+            <a class="ion-android-checkmark-circle" style="font-size: 32px;">
+            </a>
+          </ion-option-button>
+          <ion-option-button ng-if="isShowDoneButton" class="button-clear"
+                             style="padding-top:25px;padding-left: 11px;padding-right:11px"
+                             ng-click="removeItem(info)">
+            <a class="ion-ios-trash-outline" style="font-size: 32px">
+            </a>
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
     </div>
   </ion-content>
 </ion-view>
