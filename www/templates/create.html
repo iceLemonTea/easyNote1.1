@@ -1,0 +1,33 @@
+<ion-view view-title=easyNote>
+  <ion-nav-bar class="bar-stable">
+    <ion-nav-buttons side="right">
+      <button class="button-clear" ng-click="saveInfo()">
+        <a class="ion-checkmark-round" style="font-size: 22px"></a>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="left">
+      <button class="button-clear" ng-click="goBackToList()">
+        <a class="ion-chevron-left" style="font-size: 22px"></a>
+      </button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-icon-left ng-pristine ng-untouched ng-valid" ion-datetime-picker="" seconds="" am-pm=""
+           ng-model="datetimeValue" ng-click="addRemindTime()">
+        <i class="icon ion-android-notifications-none positive"></i>
+        <i id="timeValue" ng-model="datetimeValue">{{datetimeValue | date:"yyyy-MM-dd hh:mm:ss"}}</i>
+      </div>
+      <div class="item item-icon-left">
+        <i class="icon ion-pricetags"></i>
+        <p ng-click="showScheduleType()" style="color: #44A5C7;font-size: 22px">{{scheduleInfo.scheduleType}}</p>
+      </div>
+      <div class="item item-icon-left">
+        <i class="icon ion-pin"></i>
+        <label class="item item-input">
+          <input placeholder="please input your msg" type="text" ng-model="scheduleInfo.scheduleDes" ng-click="inputClick()">
+        </label>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

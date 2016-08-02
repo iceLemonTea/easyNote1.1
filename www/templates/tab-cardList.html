@@ -1,0 +1,46 @@
+<ion-view view-title="easyNote">
+  <ion-nav-bar class="bar-stable" style="background-color: #FF0000">
+    <ion-nav-buttons side="right">
+      <button class="button-clear" ng-click="synchroToNote()"><a class="ion-ios-loop-strong" style="font-size: 22px"></a></button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content class="" style="background-color: #EBEBEB">
+    <div class="row" style="border-bottom:groove;height: 200px">
+      <div class="col-50" style="border-right:groove;height: 200px" ng-click="getListByScheduleType(1)">
+        <h3 style="color: #44A5C7">
+          ALL
+        </h3>
+        <span style="color: #B8B8B8">{{totalNum}} items</span>
+      </div>
+      <div class="col-50" style="height: 200px" ng-click="getListByScheduleType(2)">
+        <h3 style="color: #44A5C7">
+          聚会
+        </h3>
+        <span style="color: #B8B8B8">{{meetingNum}} items</span>
+
+      </div>
+    </div>
+    <div class="row" style="border-bottom:groove;height: 200px">
+      <div class="col-50" style="border-right:groove;height: 200px" ng-click="getListByScheduleType(3)">
+        <h3 style="color: #44A5C7;padding-top: 5px">
+          商谈
+        </h3>
+        <span style="color: #B8B8B8">{{businessNum}} items</span>
+      </div>
+      <div class="col-50" style="height: 200px" ng-click="getListByScheduleType(4)">
+        <h3 style="color: #44A5C7;padding-top: 5px">
+          出行
+        </h3>
+        <span style="color: #B8B8B8">{{travelNum}} items</span>
+      </div>
+    </div>
+    <div class="row" style="border-bottom:groove;height: 200px">
+      <div class="col-50" style="border-right:groove;height: 200px" ng-click="getListByScheduleType(5)">
+        <h3 style="color: #44A5C7;padding-top: 5px">
+          其他
+        </h3>
+        <span style="color: #B8B8B8">{{otherNum}} items</span>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

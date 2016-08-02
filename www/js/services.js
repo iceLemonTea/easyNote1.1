@@ -169,3 +169,15 @@ angular.module('starter.services', [])
     }
     return service;
   })
+  .provider('typeOfListService', function () {
+    var data = {type: 0};
+    var f = function (type) {
+      if (type != 0) {
+        data.type = type;
+      }
+      return data;
+    };
+    this.$get = function () {
+      return f;
+    };
+  });
