@@ -94,6 +94,7 @@ angular.module('starter.controllers', [])
 
   .controller('ListCtrl', function ($scope, ContextParseService, getContextEntityAndTag, $state, LocalStorageService, $ionicPopup, $ionicTabsDelegate, typeOfListService) {
     //init some param
+    $scope.title = "ALL"
     $scope.isShowDoneButton = true;
     $scope.shouldShowDelete = false;
     //TODO:从本地缓存中读取日程数据

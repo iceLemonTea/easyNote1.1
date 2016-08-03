@@ -29,7 +29,7 @@
         <!--<ion-item id="myItem" ng-repeat="info in scheduleInfos | filter:{scheduleType: '事项类型 ：出行'}" class="item item-thumbnail-left">-->
         <ion-item id="myItem" ng-repeat="info in scheduleInfos" class="item item-avatar">
           <img src="http://img0.imgtn.bdimg.com/it/u=2281878624,1078964814&fm=21&gp=0.jpg">
-          <p ng-class="{true: 'done', false: ''}[info.scheduleState == 'done']">{{ info.scheduleDes }}</p>
+          <p ng-class="{true: 'done', false: ''}[info.scheduleState == 'done']" style="padding-top: 12px">{{ info.scheduleDes }}</p>
           <ion-option-button ng-if="isShowDoneButton" class="button-clear"
                              style="padding-top:25px;padding-left: 11px;padding-right:11px"
                              ng-click="infoDone(info)">
