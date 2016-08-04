@@ -173,11 +173,27 @@ angular.module('starter.services', [])
     }
     return service;
   })
+  //通过该全局变量，从而判断点击事件来自哪个按钮
+  //此方法是目前无法传参的替代方案
   .provider('typeOfListService', function () {
     var data = {type: 0};
     var f = function (type) {
       if (type != 0) {
         data.type = type;
+      }
+      return data;
+    };
+    this.$get = function () {
+      return f;
+    };
+  })
+  //当前日程信息的统计
+  .provider('scheduleStatisticService', function () {
+    var data = {allNum: 0,doneNum:0};
+    var f = function (allNum,doneNum) {
+      if (allNum != 0) {
+        data.allNum = allNum;
+        data.doneNum = doneNum;
       }
       return data;
     };

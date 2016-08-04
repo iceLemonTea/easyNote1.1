@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 
-  .controller('CardListCtrl', function ($scope, ContextParseService, getContextEntityAndTag, $state, LocalStorageService, $ionicPopup, $ionicTabsDelegate, typeOfListService, $state) {
+  .controller('CardListCtrl', function ($scope, $state, LocalStorageService, $ionicPopup, $ionicTabsDelegate, typeOfListService, scheduleStatisticService) {
 
     //初始化变量
     $scope.totalNum = 0;
@@ -9,7 +9,7 @@ angular.module('starter.controllers', [])
     $scope.businessNum = 0;
     $scope.travelNum = 0;
     $scope.otherNum = 0;
-    //TODO:从本地缓存中读取日程数据
+    //从本地缓存中读取日程数据
     function getScheduleInfoArray() {
       var scheduleInfoArray = LocalStorageService.getScheduleInfoArray();
       if (scheduleInfoArray != null && scheduleInfoArray != undefined && scheduleInfoArray.length > 0) {
@@ -28,6 +28,7 @@ angular.module('starter.controllers', [])
     //从数据中获取相应类型的数量
     function getScheduleNumFromInfos(scheduleInfoArray) {
       $scope.totalNum = scheduleInfoArray.length;
+      var doneNum = 0;
       for (var i = 0; i < scheduleInfoArray.length; i++) {
         switch (scheduleInfoArray[i].scheduleType) {
           case "聚会":
@@ -43,7 +44,17 @@ angular.module('starter.controllers', [])
             $scope.otherNum = $scope.otherNum + 1;
             break;
         }
+        switch (scheduleInfoArray[i].scheduleState) {
+          case "done":
+            doneNum = doneNum + 1;
+            break;
+          default:
+            break;
+        }
       }
+      //设置日程信息的统计结果
+      scheduleStatisticService($scope.totalNum, doneNum);
+      $scope.$emit("Ctr1NameChange", "halo");
     }
 
     //通过类型，进入详细的列表查看页面
@@ -97,7 +108,7 @@ angular.module('starter.controllers', [])
     $scope.title = "ALL"
     $scope.isShowDoneButton = true;
     $scope.shouldShowDelete = false;
-    //TODO:从本地缓存中读取日程数据
+    //从本地缓存中读取日程数据
     function getScheduleInfoArray() {
       var scheduleInfoArray = LocalStorageService.getScheduleInfoArray();
       if (scheduleInfoArray != null && scheduleInfoArray != undefined && scheduleInfoArray.length > 0) {
@@ -215,9 +226,9 @@ angular.module('starter.controllers', [])
     }
     //item - has finished this schedule
     $scope.infoDone = function (info) {
-      console.log("infoDone = ",info);
+      console.log("infoDone = ", info);
       //修改样式
-      var tag = "#p"+info.scheduleId;
+      var tag = "#p" + info.scheduleId;
       $(tag).css("text-decoration", "line-through");
       //同步状态
       info.scheduleState = "done";
@@ -441,27 +452,44 @@ angular.module('starter.controllers', [])
     //增加提醒时间设置
     $scope.addRemindTime = function () {
       console.log("增加提醒时间设置");
-      $("#timeValue").css("color","#44A5C7");
+      $("#timeValue").css("color", "#44A5C7");
     }
     $scope.infoChanged = function () {
       console.log("infoChanged");
-      if($scope.scheduleInfo.scheduleDes.indexOf("please input your msg") >= 0) {
+      if ($scope.scheduleInfo.scheduleDes.indexOf("please input your msg") >= 0) {
         $scope.scheduleInfo.scheduleDes = "";
       }
     }
     $scope.inputClick = function () {
       console.log("inputClick");
-      if($scope.scheduleInfo.scheduleDes.indexOf("please input your msg") >= 0) {
+      if ($scope.scheduleInfo.scheduleDes.indexOf("please input your msg") >= 0) {
         $scope.scheduleInfo.scheduleDes = "";
       }
     }
-    function infoChanged () {
+    function infoChanged() {
       console.log("infoChanged");
     }
   })
 
-  .controller('AccountCtrl', function ($scope) {
-    $scope.settings = {
-      enableFriends: true
-    };
+  .controller('AccountCtrl', function ($scope, scheduleStatisticService) {
+    console.log("into Account Ctrl");
+    $scope.allNum = 0;
+    $scope.doneNum = 0;
+    $scope.getScheduleStatistics = function () {
+      //通过services获取任务统计结果
+      var scheduleStatistics = scheduleStatisticService(0, 0);
+      if (scheduleStatistics != null && scheduleStatistics != null && scheduleStatistics.allNum != 0) {
+        $scope.allNum = scheduleStatistics.allNum;
+        $scope.doneNum = scheduleStatistics.doneNum;
+      }
+    }
+    $scope.likeIt = function () {
+      console.log("likeIt");
+      $scope.getScheduleStatistics();
+    }
+    $scope.$on("Ctr1NameChange",
+      function (event, msg) {
+        console.log("parent msg", msg);
+        $scope.getScheduleStatistics();
+      });
   });

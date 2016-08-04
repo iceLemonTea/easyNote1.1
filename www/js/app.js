@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ion-datetime-picker'])
 
-  .run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform, $rootScope, $ionicSideMenuDelegate) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -23,9 +23,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       //alert("$ionicPlatform.ready");
       //cool.toast.showToast();
     });
+
+    var locationChangeStartOff = $rootScope.$on('$locationChangeStart', locationChangeStart);
+//
+    function locationChangeStart(event, newUrl, currentUrl) {
+      //调试用信息，测试无误后可删除
+      console.log('arguments = ', arguments);
+      console.log('newUrl = ', newUrl);
+      console.log('decode -> newUrl = ', decodeURIComponent(newUrl));
+      console.log('currentUrl = ', currentUrl);
+      if (decodeURIComponent(newUrl).indexOf("/list") >= 0) {
+        console.log('newUrl.indexof = ', newUrl.indexOf('/list'));
+        $ionicSideMenuDelegate.canDragContent(false);
+        return;
+      }else {
+        $ionicSideMenuDelegate.canDragContent(true);
+      }
+      console.log('判断结束 ');
+    }
   })
 
-  .config(function ($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
     $ionicConfigProvider.platform.ios.tabs.style('standard');
     $ionicConfigProvider.platform.ios.tabs.position('bottom');
